@@ -1,0 +1,6 @@
+{
+	"appId": "uban_recolector.com.app",
+	"appName": "Urban Recolector",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

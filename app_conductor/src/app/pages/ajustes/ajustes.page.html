@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>ajustes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div style="display: flex; justify-content: center">
+          <ion-avatar>
+            <img
+              src="https://ui-avatars.com/api/?name={{user.name+' '+user.surname}}"
+            />
+          </ion-avatar>
+        </div>
+        <hr />
+        <h5>
+          {{user.name+' '+user.surname}}
+          <ng-container *ngIf="user.verified; else notVerified">
+            <i class="fa fa-check-circle" color="success"></i>
+          </ng-container>
+          <ng-template #notVerified>
+            <i class="fa fa-times-circle" color="danger"></i>
+          </ng-template>
+        </h5>
+        <h6>Cédula: {{user.dni}}</h6>
+        <h6>Correo: {{user.email}}</h6>
+        <h6>Rol: {{user.role}}</h6>
+        <hr />
+        <ion-button color="danger" (click)="loginService.logout()">
+          Salir <i class="fa fa-sign-out"></i>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

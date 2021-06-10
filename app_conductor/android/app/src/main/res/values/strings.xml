@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Urban Recolector</string>
+    <string name="title_activity_main">Urban Recolector</string>
+    <string name="package_name">uban_recolector.com.app</string>
+    <string name="custom_url_scheme">uban_recolector.com.app</string>
+</resources>

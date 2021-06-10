@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center"
+        >Ingresar al sistema</ion-card-title
+      >
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="login($event)">
+        <ion-item>
+          <ion-label position="floating">Cédula</ion-label>
+          <ion-input
+            type="text"
+            id=""
+            name="dni"
+            formControlName="dni"
+            required
+            minlength="10"
+            maxlength="10"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input
+            ngControl="password"
+            name="password"
+            formControlName="password"
+            required
+            minlength="6"
+            type="password"
+          ></ion-input>
+        </ion-item>
+        <hr />
+        <ion-button
+          expand="block"
+          color="success"
+          type="submit"
+          [disabled]="loginForm.invalid"
+          [ngClass]="{'disabled' : loginForm.invalid}"
+        >
+          Ingresar
+        </ion-button>
+      </form>
+      <hr />
+      <!-- Error messages -->
+      <span class="error ion-padding" *ngIf="errorControl.dni.errors?.required">
+        La cédula es requerida.
+      </span>
+      <span
+        class="error ion-padding"
+        *ngIf="errorControl.dni.errors?.minlength||errorControl.dni.errors?.maxlength"
+      >
+        La cédula debe tener 10 dígitos.
+      </span>
+      <span
+        class="error ion-padding"
+        *ngIf="errorControl.password.errors?.required"
+      >
+        La contraseña es requerida.
+      </span>
+      <span
+        class="error ion-padding"
+        *ngIf="errorControl.password.errors?.minlength"
+      >
+        La contraseña debe tener mínimo 6 caracteres.
+      </span>
+    </ion-card-content>
+  </ion-card>
+
+  <span class="error ion-padding" *ngIf="!userStatus"> No se encontró el usuario </span>
+</ion-content>

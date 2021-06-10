@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Horarios</ion-title>
+  </ion-toolbar>
+  
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div (click)="setDia(1)" id="day1">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>Lunes</ion-label>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div (click)="setDia(2)" id="day2">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>Martes</ion-label>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div (click)="setDia(3)" id="day3">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>Miércoles</ion-label>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div (click)="setDia(4)" id="day4">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>Jueves</ion-label>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div (click)="setDia(5)" id="day5">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>Viernes</ion-label>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div (click)="setDia(6)" id="day6">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>Sábado</ion-label>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div (click)="setDia(7)" id="day7">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <ion-label>Domingo</ion-label>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid *ngIf="showDays">
+    <ion-row *ngFor="let car of days " class="container-horario">
+
+      <ion-col class="container-colunm-first" style="border-bottom: 1px solid blue;"> Datos del Vehículo 
+          <div class="vehicle-details">
+            <div class="vehicle-details">
+              <ion-icon name="car-outline" style="width: 20px;height:20px;"></ion-icon>
+              <ion-label> {{car.brand}} </ion-label>  
+            </div>
+            <div class="vehicle-details">
+              <ion-icon name="color-filter-outline" style="width: 20px;height:20px;"></ion-icon>
+              <ion-label> {{car.model}} </ion-label>
+            </div>
+          </div>
+          <div class="vehicle-details">
+            <div class="vehicle-details">
+              <ion-icon name="phone-landscape-outline" style="width: 20px;height:20px;"></ion-icon>
+              <ion-label> {{car.nro_reg}} </ion-label>  
+            </div>
+            <div class="vehicle-details">
+              <ion-icon name="today-outline" style="width: 20px;height:20px;"></ion-icon>
+              <ion-label> {{car.year}} </ion-label>
+            </div>
+          </div>
+          
+      </ion-col>
+      
+      <ion-col class="container-colunm-last" style="border-right: 1px solid blue; border-left: 1px solid blue; border-bottom: 1px solid blue; "> Horarios 
+        <ion-grid>
+          <ion-row *ngFor="let horario of car.dia; let i = index">
+            <ion-row *ngIf="i == 0" >
+              <ion-col>
+                <ion-label class="title-day">Inicio</ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-label class="title-day">Fin</ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-label class="title-day">Ruta</ion-label>
+              </ion-col>
+            </ion-row>
+            <!-- {{colors(5,1)}} -->
+            <ion-row > 
+              <ion-col class="detail-day fondo1">
+                {{horario.start_hour}}
+              </ion-col>
+              <ion-col class="detail-day fondo2">
+                {{horario.end_hour}}
+              </ion-col>
+              <ion-col class="detail-day fondo3">
+                {{horario.route_name}}
+              </ion-col>
+            </ion-row>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+     </ion-row>
+  </ion-grid> 
+
+  <ion-grid *ngIf="showDays!= null && !showDays">
+    <ion-row>
+      <ion-label>No tiene horarios designados para este día</ion-label>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
