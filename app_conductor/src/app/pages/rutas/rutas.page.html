@@ -10,9 +10,12 @@
   
     <ion-item>
       <ion-label>Mis Designaciones</ion-label>
-      <ion-select placeholder="Seleccione Una" >
-        <ion-select-option value="f">Ruta 1</ion-select-option >
-        <ion-select-option value="m">Ruta 2</ion-select-option>
+      <ion-select placeholder="Seleccione Una" (ionChange)="onChange($event)">
+        <ng-container *ngFor="let ruta of rutas;let i=index">
+          <ion-select-option value="{{ i }}"> {{ ruta.name }} </ion-select-option>
+        </ng-container>
+       <!--  <ion-select-option value="f">Ruta 1</ion-select-option >
+        <ion-select-option value="m">Ruta 2</ion-select-option> -->
       </ion-select>
     </ion-item>
   

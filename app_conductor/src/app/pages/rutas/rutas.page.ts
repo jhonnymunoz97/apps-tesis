@@ -37,35 +37,17 @@ export class RutasPage implements OnInit {
   rutas: Ruta[];
 
   map:any;
+  directionsServices = new google.maps.DirectionsService();
+  directionsDisplay = new google.maps.DirectionsRenderer();
 
 
-  infoWindows: any = [];
-  markers: any = [
-    {
-      title: "National Art Gallery",
-      latitude: "-17.824991",
-      longitude: "31.049295"
-    },
-    {
-      title: "West End Hospital",
-      latitude: "-17.820987",
-      longitude: "31.039682"
-    },
-    {
-      title: "Dominical Convent School",
-      latitude: "-17.822647",
-      longitude: "31.052042"
-    }
-  ];
  
   @ViewChild('map',{read: ElementRef, static:false}) mapRef: ElementRef;
 
   constructor(private rutaService: RutaService) { }
 
   ngOnInit() {
-    //this.ioViewDidEnter()
     this.getRutas()
-    //console.log(this.rutas)
   }
 
   alerta(){
@@ -86,6 +68,7 @@ export class RutasPage implements OnInit {
       
     }
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
+    this.directionsDisplay.setMap(this.map)
   }
 
   getRutas() {
@@ -95,205 +78,33 @@ export class RutasPage implements OnInit {
     });
   }
 
-
-  /* rutas: Ruta[];
-  driver: Driver;
-  key = null;
-  color = "success";
-
-  options: GoogleMapOptions = {
-    camera: {
-      target: new LatLng(-1.05458, -80.45445),
-      zoom: 13,
-    },
-    controls: {
-      compass: true,
-      myLocationButton: true,
-      myLocation: true, // (blue dot)
-      indoorPicker: true,
-      zoom: true, // android only
-      mapToolbar: true, // android only
-    },
-    building: true,
-    gestures: {
-      scroll: true,
-      tilt: true,
-      zoom: true,
-      rotate: false,
-    },
-  };
-  map: GoogleMap;
-  loading: any;
-  users: any[];
-  ruta: Ruta;
-  constructor(
-    public loadingCtrl: LoadingController,
-    public toastCtrl: ToastController,
-    private platform: Platform,
-    private toastController: ToastController,
-    private driverService: DriverService,
-    private rutaService: RutaService,
-    private authService: AuthService,
-    private userService: UserService
-  ) {}
-  async ngOnInit() {
-    // Debido ngOnInit() inicia antes del evento
-    // deviceready, debemos detectar cuando este evento se
-    // ejecute para en ese momento cargar nuestro mapa sin problema alguno
-    await this.platform.ready();
-    this.map = GoogleMaps.create("map_canvas", this.options);
-    this.getDrivers();
-    this.getRutas();
-    this.getUsers();
-  }
-
-  async iniciar() {
-    this.color = "danger";
-    await LocationService.getMyLocation().then(async (myLocation: MyLocation) => {
-      const cameraPos: CameraPosition<ILatLng> = {
-        target: { lat: myLocation.latLng.lat, lng: myLocation.latLng.lng },
-        zoom: 20,
-      };
-      this.users.forEach(async (user: User) => {
-        if (user.ruta == this.ruta.$key) {
-          console.log(user);
-          this.map.animateCamera(cameraPos);
-          this.userService.sendNotification(user, this.ruta).subscribe(async (response) => {
-            console.log(response);
-            const toast = await this.toastController.create({
-              message: "Enviando ubicación en tiempo real",
-              duration: 8500,
-              position: "top",
-              translucent: true,
-            });
-            toast.present();
-            this.driver.location = myLocation;
-            this.driver.last_login = new Date();
-            this.driverService.editDriver(this.driver);
-          });
-        }
-      });
-    });
-    function delay(t) {
-      return new Promise((resolve) => setTimeout(resolve, t));
-    }
-
-    async function* interval(t) {
-      while (true) {
-        const now = Date.now();
-        yield "hello";
-        await delay(now - Date.now() + t);
-      }
-    }
-
-    for await (const {} of interval(3000)) {
-      this.getAndSetLocation();
-    }
-  }
-
-  parar() {
-    this.color = "danger";
-    window.location.reload();
-  }
-
-  async getAndSetLocation() {
-    const myLocation = await this.map.getMyLocation();
-    if (myLocation.accuracy < 20) {
-      const cameraPos: CameraPosition<ILatLng> = {
-        target: { lat: myLocation.latLng.lat, lng: myLocation.latLng.lng },
-      };
-      this.map.animateCamera(cameraPos);
-      this.driver.location = myLocation;
-      this.driver.last_login = new Date();
-      this.driverService.editDriver(this.driver);
-    }
-  }
-
-  getDrivers() {
-    this.driverService.getDrivers().subscribe((drivers: Driver[]) => {
-      let existe = false;
-      drivers.forEach((driver: Driver) => {
-        // tslint:disable-next-line: triple-equals
-        if (driver.email == this.authService.currentUserValue.email) {
-          existe = true;
-          this.driver = driver;
-        }
-      });
-      if (!existe) {
-        this.driverService.addDriver(this.authService.currentUserValue);
-        this.getDrivers();
-      }
-    });
-  }
-  getRutas() {
-    this.rutaService.getRutas().subscribe((rutas: Ruta[]) => {
-      this.rutas = rutas;
-    });
-  }
-
-  getUsers() {
-    this.userService.getUsers().subscribe((users: User[]) => {
-      this.users = users;
-    });
-  }
-
-  setRuta(i: number) {
-    this.ruta = this.rutas[i];
-    let directionsService = new google.maps.DirectionsService();
-    directionsService.route(
+  paintRoute(i:number){
+    let ruta =  this.rutas[i]
+    this.directionsServices.route(
       {
         origin: {
-          lat: this.ruta.origin.lat,
-          lng: this.ruta.origin.lng,
+          lat: ruta.origin.lat,
+          lng: ruta.origin.lng,
         },
         destination: {
-          lat: this.ruta.destination.lat,
-          lng: this.ruta.destination.lng,
+          lat: ruta.destination.lat,
+          lng: ruta.destination.lng,
         },
-        waypoints: this.ruta.waypoints,
+        waypoints: ruta.waypoints,
         travelMode: google.maps.TravelMode["DRIVING"],
       },
       (res, status) => {
-        if (status == google.maps.DirectionsStatus.OK) {
-          let decodedPoints = GoogleMaps.getPlugin().geometry.encoding.decodePath(res.routes[0].overview_polyline);
-          this.map.clear();
-          let newOptions: GoogleMapOptions = JSON.parse(
-            JSON.stringify({
-              camera: {
-                target: new LatLng(this.ruta.origin.lat, this.ruta.destination.lng),
-                zoom: 17,
-              },
-              controls: {
-                compass: true,
-                myLocationButton: true,
-                myLocation: true, // (blue dot)
-                indoorPicker: true,
-                zoom: true, // android only
-                mapToolbar: true, // android only
-              },
-              building: true,
-              gestures: {
-                scroll: true,
-                tilt: true,
-                zoom: true,
-                rotate: false,
-              },
-            })
-          );
-          this.map.setOptions(newOptions);
-          this.map.addPolyline({
-            points: decodedPoints,
-            color: "#4a4a4a",
-            width: 4,
-            geodesic: true,
-          });
+        if (status === google.maps.DirectionsStatus.OK) {
+          this.directionsDisplay.setDirections(res)
+        }else{
+          alert('Could not display directions due to:' + status)
         }
-      }
-    );
-  }
-  onChange($event) {
-    this.setRuta(parseInt($event.target.value));
-  }
- */
- 
+    })
+   
+}
+
+onChange($event) {
+  this.paintRoute(parseInt($event.target.value));
+}
+
 }
