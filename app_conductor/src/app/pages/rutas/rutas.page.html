@@ -14,19 +14,9 @@
         <ng-container *ngFor="let ruta of rutas;let i=index">
           <ion-select-option value="{{ i }}"> {{ ruta.name }} </ion-select-option>
         </ng-container>
-       <!--  <ion-select-option value="f">Ruta 1</ion-select-option >
-        <ion-select-option value="m">Ruta 2</ion-select-option> -->
       </ion-select>
     </ion-item>
   
-    <!-- <app-google-maps apiKey="YOUR_GOOGLE_API_KEY"></app-google-maps> -->
-    <!-- <app-google-maps apiKey="YOUR_GOOGLE_API_KEY"></app-google-maps> -->
-    <!-- <app-google-maps apiKey="AIzaSyD0-E85MYatjF8nVIGVOh1l4floOTLMmG0">
-
-    </app-google-maps> -->
-
-
-
   
   </ion-list>
 
@@ -34,6 +24,17 @@
   <div #map id="map">
 
   </div>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="!inicio" ngClass >
+    <ion-fab-button (click)="setLocation(true)" [attr.color]="'success'">
+      <ion-icon name="play-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="inicio">
+    <ion-fab-button (click)="setLocation(false)" [attr.color]="'danger'">
+      <ion-icon name="stop-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
 
