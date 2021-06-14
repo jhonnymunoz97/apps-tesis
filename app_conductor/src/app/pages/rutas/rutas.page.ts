@@ -1,29 +1,10 @@
-import { Component, DoCheck, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-//import { from } from 'rxjs';
-
+import { Component, DoCheck, OnInit } from '@angular/core';
 import {ViewChild, ElementRef} from '@angular/core';
 import { Ruta } from 'src/app/models/ruta';
 import { RutaService } from 'src/app/service/ruta.service';
 import {Geolocation} from '@capacitor/geolocation';
 import { Driver } from 'src/app/models/driver';
 import { DriverService } from 'src/app/service/driver.service';
-/* import {
-  CameraPosition,
-  GoogleMap,
-  GoogleMapOptions,
-  GoogleMaps,
-  ILatLng,
-  LatLng,
-  LocationService,
-  MyLocation,
-} from "@ionic-native/google-maps";
-import { LoadingController, ToastController, Platform } from "@ionic/angular"; */
-
-/* import { Driver } from 'src/app/models/driver';
-import { User } from 'src/app/models/user';
-import { DriverService } from 'src/app/service/driver.service';
-import { UserService } from 'src/app/service/user.service';
-import { AuthService } from 'src/app/service/auth.service'; */
 
 declare var google: any;
 
@@ -58,7 +39,6 @@ export class RutasPage implements OnInit, DoCheck {
   }
 
   ngOnInit() {
-    //window.location.reload()
     this.getRutas()
     this.getDriver()
   }
