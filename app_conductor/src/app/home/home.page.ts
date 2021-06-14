@@ -10,9 +10,12 @@ export class HomePage implements OnInit {
 
   user:any
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) { 
+    //window.location.reload()
+  }
 
   ngOnInit() {
+    //window.location.reload()
     this.user = JSON.parse(localStorage.getItem('currentUser'))
     if (this.user.profilePhoto == null) this.user.profilePhoto = 'https://i.pravatar.cc/1000'
   }

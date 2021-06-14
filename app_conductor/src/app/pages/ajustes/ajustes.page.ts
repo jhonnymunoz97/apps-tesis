@@ -12,6 +12,7 @@ export class AjustesPage implements OnInit {
   constructor(public loginService: LoginService) { }
 
   ngOnInit() {
+    //window.location.reload()
     this.user = JSON.parse(localStorage.getItem('currentUser'))
     if (this.user.profilePhoto == null) this.user.profilePhoto = 'https://i.pravatar.cc/1000'
   }
