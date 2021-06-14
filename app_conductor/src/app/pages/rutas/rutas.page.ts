@@ -5,6 +5,9 @@ import { RutaService } from 'src/app/service/ruta.service';
 import {Geolocation} from '@capacitor/geolocation';
 import { Driver } from 'src/app/models/driver';
 import { DriverService } from 'src/app/service/driver.service';
+import { Assign } from 'src/app/models/assign';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 declare var google: any;
 
@@ -18,6 +21,8 @@ export class RutasPage implements OnInit, DoCheck {
 
   driver: Driver;
   rutas: Ruta[];
+  assigns: Assign[] = [];
+  my_routes: any = []
 
   map:any;
   directionsServices = new google.maps.DirectionsService();
@@ -25,7 +30,7 @@ export class RutasPage implements OnInit, DoCheck {
  
   @ViewChild('map',{read: ElementRef, static:false}) mapRef: ElementRef;
 
-  constructor(private rutaService: RutaService,private driverService: DriverService) {   }
+  constructor(private rutaService: RutaService,private driverService: DriverService,public http: HttpClient) {   }
 
   start_tour: boolean = false
   
@@ -34,17 +39,24 @@ export class RutasPage implements OnInit, DoCheck {
 
 
   ngDoCheck(): void {
-    if(this.inicio) setTimeout(this.getLocation, 10000)
-    if(this.fin) window.location.reload();
+    /* if(this.inicio) setTimeout(this.getLocation, 10000)
+    if(this.fin) window.location.reload(); */
   }
 
   ngOnInit() {
+    this.getAssigns()
     this.getRutas()
     this.getDriver()
+    
   }
 
   ionViewDidEnter(){
     this.showMap()
+    
+  }
+
+  ionViewDidLoad(){
+    console.log("Hola") 
   }
 
   showMap(){
@@ -62,10 +74,36 @@ export class RutasPage implements OnInit, DoCheck {
   getRutas() {
     this.rutaService.getRutas().subscribe((rutas: Ruta[]) => {
       this.rutas = rutas;
-      console.log(this.rutas)
     });
   }
 
+  getAssigns() {
+    this.http
+      .get<Assign[]>(environment.apiURL + 'assigns')
+      .subscribe( data => {
+        this.assigns = (data as any).data;
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        this.assigns = this.assigns.filter(data =>{
+          if(data.driver.id == currentUser.id) return true
+        })
+        this.assigns.filter(data => {
+          data.horarios.forEach(element => {
+            if(!this.my_routes.includes(element.road)){
+              this.my_routes.push(element.road)
+            }
+          });
+        })
+        let route_name = ''; let cont = 0
+        this.my_routes = this.my_routes.filter(data=>{
+          if(cont == 0) {route_name = data.name;cont++;return true}
+          if(data.name != route_name){
+            route_name = data.name
+            return true
+          }
+        })
+      });
+  }
+  
   getDriver(){
     this.driverService.getDrivers().subscribe((drivers: Driver[]) => {
       let existe = false;
@@ -84,7 +122,7 @@ export class RutasPage implements OnInit, DoCheck {
   }
 
   paintRoute(i:number){
-    let ruta =  this.rutas[i]
+    let ruta =  this.my_routes[i]
     this.directionsServices.route(
       {
         origin: {
@@ -107,19 +145,23 @@ export class RutasPage implements OnInit, DoCheck {
     })
    
 }
+status: boolean = false
 
 onChange($event) {
   this.paintRoute(parseInt($event.target.value));
+  this.status = true
 }
 
-async setLocation(start: boolean){
+setLocation(start: boolean){
   if(start) this.inicio = true
   else this.fin = true
+  this.getLocation()
 }
 
  getLocation = async () =>{
-  const coordenadas = await Geolocation.getCurrentPosition() 
-  let location = {
+  while(!this.fin){
+    const coordenadas = await Geolocation.getCurrentPosition() 
+    let location = {
       accuracy: coordenadas.coords.accuracy,
       altitude: coordenadas.coords.altitude,
       latLng:{
@@ -127,10 +169,12 @@ async setLocation(start: boolean){
         lng: coordenadas.coords.longitude
       },
       speed: coordenadas.coords.speed,
-  };
-  this.driver.location = location
-  this.driver.last_login = new Date();
-  this.driverService.editDriver(this.driver);
+    };
+    this.driver.location = location
+    this.driver.last_login = new Date();
+    this.driverService.editDriver(this.driver);
+  }
+  window.location.reload()
 }
 
 }

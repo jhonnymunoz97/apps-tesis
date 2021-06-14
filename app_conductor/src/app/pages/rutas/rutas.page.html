@@ -11,7 +11,7 @@
     <ion-item>
       <ion-label>Mis Designaciones</ion-label>
       <ion-select placeholder="Seleccione Una" (ionChange)="onChange($event)">
-        <ng-container *ngFor="let ruta of rutas;let i=index">
+        <ng-container *ngFor="let ruta of my_routes;let i=index">
           <ion-select-option value="{{ i }}"> {{ ruta.name }} </ion-select-option>
         </ng-container>
       </ion-select>
@@ -25,12 +25,12 @@
 
   </div>
 
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="!inicio" ngClass >
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="!inicio && status" ngClass >
     <ion-fab-button (click)="setLocation(true)" [attr.color]="'success'">
       <ion-icon name="play-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="inicio">
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="inicio && status">
     <ion-fab-button (click)="setLocation(false)" [attr.color]="'danger'">
       <ion-icon name="stop-outline"></ion-icon>
     </ion-fab-button>

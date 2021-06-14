@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ArrayType } from '@angular/compiler';
+import { ArrayType, ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Assign, DayHorario } from 'src/app/models/assign';
 import { AsignacionesService } from 'src/app/service/asignaciones.service';
@@ -39,6 +39,7 @@ export class HorariosPage implements OnInit {
         this.assigns = this.assigns.filter(data =>{
           if(data.driver.id == currentUser.id) return true
         })
+        console.log(this.assigns)
       });
   }
 
@@ -78,11 +79,6 @@ export class HorariosPage implements OnInit {
     this.day = dia
     this.getHorarios()
     this.getHorarioDay(dia)
-    this.showHorario()
-  }
-
-  showHorario(){
-
   }
 
   getHorarioDay(dia:number){
@@ -113,6 +109,9 @@ export class HorariosPage implements OnInit {
     });
     if(this.days.length>0) this.showDays = true
     else this.showDays = false
+    
+    console.log(this.days)
+    
   }
 
   getDay(dia:number):string{
@@ -124,9 +123,5 @@ export class HorariosPage implements OnInit {
     if(dia == 6) return "Sábado"
     if(dia == 7) return "Domingo"
   }
-  color: number
-  colors(max:number,min: number){
-    this.color = Math.floor((Math.random() * (max - min + 1)) + min)
-    console.log(this.color)
-  }
+ 
 }
