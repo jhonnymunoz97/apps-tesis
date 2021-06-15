@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Busca tu ruta con las flechas </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div #map id="map">
+
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <h4>
+      <ng-container *ngIf="rutas!=null && rutas.length && status>0;else default"> 
+        {{ rutas[indexRoute].name }} 
+      </ng-container>
+    </h4>
+    &nbsp;&nbsp;
+    <ion-fab-button [attr.color]="'success'" (click)="paintRoute(0)">
+      <ion-icon name="arrow-back-circle-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button  [attr.color]="'success'" style="margin-left: 0.5rem" (click)="paintRoute(1)">
+      <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button  [attr.color]="'success'" style="margin-left: 0.5rem">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+
+ 
