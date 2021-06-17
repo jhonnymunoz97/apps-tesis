@@ -1,10 +1,10 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'uban_recolector.com.app',
-  appName: 'Urban Recolector',
+  appId: 'com.aqsystems.urban.recolector',
+  appName: 'urban_conductor',
   webDir: 'www',
-  bundledWebRuntime: false
+  bundledWebRuntime: true
 };
 
 export default config;

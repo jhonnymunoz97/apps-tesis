@@ -6,27 +6,23 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
-import { AngularFireModule } from "@angular/fire";
-import { AngularFireAuthModule } from "@angular/fire/auth";
-import { AngularFireDatabaseModule } from "@angular/fire/database";
-import { AngularFireStorageModule } from "@angular/fire/storage";
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { JwtInterceptorService } from './service/jwt-interceptor.service';
 import { GoogleMapsComponent } from './googleMap/google-maps/google-maps.component';
-
+import { ErrorInterceptor } from './helpers/error-interceptor.service';
 
 @NgModule({
-  
-  declarations: [
-    AppComponent,
-  ],
-
+  declarations: [AppComponent],
 
   entryComponents: [],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicModule,
@@ -40,9 +36,12 @@ import { GoogleMapsComponent } from './googleMap/google-maps/google-maps.compone
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptorService,
-      multi: true
+      multi: true,
     },
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

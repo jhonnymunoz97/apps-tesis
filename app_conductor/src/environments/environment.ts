@@ -4,20 +4,19 @@
 
 export const environment = {
   production: false,
-  apiURL: "http://127.0.0.1:8000/",
-
+  apiURL: 'https://tesis.cicmanabi.com/',
 
   firebaseConfig: {
-    apiKey: "AIzaSyCpClIhs6vPaXv-rpemGoIq--fxllbYteI",
-    authDomain: "urban-recolector.firebaseapp.com",
-    projectId: "urban-recolector",
-    storageBucket: "urban-recolector.appspot.com",
-    messagingSenderId: "1161834233",
-    appId: "1:1161834233:web:05d4c0a839d9992a88bc28",
-    measurementId: "G-FEQ09MLQJH",
+    apiKey: 'AIzaSyCpClIhs6vPaXv-rpemGoIq--fxllbYteI',
+    authDomain: 'urban-recolector.firebaseapp.com',
+    projectId: 'urban-recolector',
+    storageBucket: 'urban-recolector.appspot.com',
+    messagingSenderId: '1161834233',
+    appId: '1:1161834233:web:05d4c0a839d9992a88bc28',
+    measurementId: 'G-FEQ09MLQJH',
   },
 
-  keyGoogleMap:'AIzaSyD0-E85MYatjF8nVIGVOh1l4floOTLMmG0'
+  keyGoogleMap: 'AIzaSyD0-E85MYatjF8nVIGVOh1l4floOTLMmG0',
 };
 
 /*
@@ -28,5 +27,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-
-

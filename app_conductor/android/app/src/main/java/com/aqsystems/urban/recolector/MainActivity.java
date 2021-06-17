@@ -1,4 +1,4 @@
-package uban_recolector.com.app;
+package com.aqsystems.urban.recolector;
 
 import com.getcapacitor.BridgeActivity;
 
