@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { ViewChild, ElementRef } from '@angular/core';
 import { Ruta } from 'src/app/models/ruta';
@@ -8,9 +9,7 @@ import { DriverService } from 'src/app/service/driver.service';
 import { Assign } from 'src/app/models/assign';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-
-declare let google: any;
-
+//declare let google: any;
 @Component({
   selector: 'app-rutas',
   templateUrl: './rutas.page.html',
@@ -18,7 +17,7 @@ declare let google: any;
 })
 export class RutasPage implements OnInit, DoCheck {
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
-
+  marker: google.maps.Marker = null;
   driver: Driver;
   rutas: Ruta[];
   assigns: Assign[] = [];
@@ -28,7 +27,7 @@ export class RutasPage implements OnInit, DoCheck {
 
   inicio = false;
   fin = false;
-  map: any;
+  map: google.maps.Map;
   directionsServices = new google.maps.DirectionsService();
   directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -43,25 +42,34 @@ export class RutasPage implements OnInit, DoCheck {
     if(this.fin) window.location.reload(); */
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getAssigns();
     this.getRutas();
     this.getDriver();
+    const coordinates = await Geolocation.getCurrentPosition();
+    this.showMap(coordinates.coords.latitude, coordinates.coords.longitude);
+    this.marker = new google.maps.Marker({
+      position: {
+        lat: coordinates.coords.latitude,
+        lng: coordinates.coords.longitude,
+      },
+      map: this.map,
+      icon: {
+        url: 'assets/icon/marker.png',
+      },
+      visible: true,
+    });
   }
 
-  ionViewDidEnter() {
-    this.showMap();
-  }
+  async ionViewDidEnter() {}
 
-  ionViewDidLoad() {
-    console.log('Hola');
-  }
+  ionViewDidLoad() {}
 
-  showMap() {
-    const location = new google.maps.LatLng(-1.05458, -80.45445);
+  showMap(lat, lng) {
+    const location = new google.maps.LatLng(lat, lng);
     const options = {
       center: location,
-      zoom: 15,
+      zoom: 17,
       disabledDefaultUI: true,
     };
     this.map = new google.maps.Map(this.mapRef.nativeElement, options);
@@ -165,25 +173,35 @@ export class RutasPage implements OnInit, DoCheck {
   }
 
   getLocation = async () => {
-    while (!this.fin) {
-      const coordenadas = await Geolocation.getCurrentPosition();
-      const location = {
-        accuracy: coordenadas.coords.accuracy,
-        altitude: coordenadas.coords.altitude,
-        latLng: {
-          lat: coordenadas.coords.latitude,
-          lng: coordenadas.coords.longitude,
-        },
-        speed: coordenadas.coords.speed,
-      };
-      this.driver.location = location;
-      this.driver.last_login = new Date();
-      this.driverService.editDriver(this.driver);
-      this.driverService.addRecord({
-        driver: this.driver,
-        location,
-      });
-    }
-    window.location.reload();
+    Geolocation.watchPosition(
+      {
+        enableHighAccuracy: true,
+      },
+      (coordenadas) => {
+        const location = {
+          accuracy: coordenadas.coords.accuracy,
+          altitude: coordenadas.coords.altitude,
+          latLng: {
+            lat: coordenadas.coords.latitude,
+            lng: coordenadas.coords.longitude,
+          },
+          speed: coordenadas.coords.speed,
+        };
+        this.map.setCenter(location.latLng);
+        this.map.setZoom(18);
+        this.marker.setVisible(true);
+        this.marker.setPosition(location.latLng);
+        this.driver.location = location;
+        this.driver.last_login = new Date();
+        this.driverService.editDriver(this.driver);
+        /* this.driverService.addRecord({
+          driver: this.driver,
+          location,
+        }); */
+        if (this.fin) {
+          window.location.reload();
+        }
+      }
+    );
   };
 }
