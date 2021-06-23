@@ -1,5 +1,12 @@
 //import { DOCUMENT } from '@angular/common';
-import { Component, OnInit, Input, Renderer2, ElementRef, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Renderer2,
+  ElementRef,
+  Inject,
+} from '@angular/core';
 
 //import { DOCUMENT } from '@angular/platform-browser';
 //import { Plugins } from '@capacitor/core';
@@ -14,36 +21,27 @@ import { Geolocation } from '@capacitor/geolocation';
   styleUrls: ['./google-maps.component.scss'],
 })
 export class GoogleMapsComponent implements OnInit {
+  @Input() apiKey: string;
 
-  @Input('apiKey') apiKey: string;
+  lat: number;
+  long: number;
+  constructor() {}
 
-
-  lat: number
-  long: number
-
-  ngOnInit(){
-      this.printCurrentPosition()
-      console.log("init")
-      
-
+  ngOnInit() {
+    this.printCurrentPosition();
+    console.log('init');
   }
 
-  constructor(){
-
-  }
-
-
-  async printCurrentPosition () {
+  async printCurrentPosition() {
     const coordinates = await Geolocation.getCurrentPosition();
     //console.log('Current position:', coordinates);
-    this.lat = coordinates.coords.latitude
-    this.long = coordinates.coords.longitude
-    console.log("Latitud: " + this.lat )
-    console.log("Longitud: " + this.long)
-  };
+    this.lat = coordinates.coords.latitude;
+    this.long = coordinates.coords.longitude;
+    console.log('Latitud: ' + this.lat);
+    console.log('Longitud: ' + this.long);
+  }
 
-
-    /* public map: any;
+  /* public map: any;
     public markers: any[] = [];
     private mapsLoaded: boolean = false;
     private networkHandler = null;
@@ -56,7 +54,7 @@ export class GoogleMapsComponent implements OnInit {
 
         this.init().then((res) => {
             console.log("Google Maps ready.")
-        }, (err) => {    
+        }, (err) => {
             console.log(err);
         });
 
@@ -114,7 +112,7 @@ export class GoogleMapsComponent implements OnInit {
 
                                     this.init().then((res) => {
                                         console.log("Google Maps ready.")
-                                    }, (err) => {    
+                                    }, (err) => {
                                         console.log(err);
                                     });
 
@@ -168,7 +166,7 @@ export class GoogleMapsComponent implements OnInit {
             if(this.apiKey){
                 script.src = 'https://maps.googleapis.com/maps/api/js?key=' + this.apiKey + '&callback=mapInit';
             } else {
-                script.src = 'https://maps.googleapis.com/maps/api/js?callback=mapInit';       
+                script.src = 'https://maps.googleapis.com/maps/api/js?callback=mapInit';
             }
 
             this.renderer.appendChild(this._document.body, script);
@@ -218,5 +216,4 @@ export class GoogleMapsComponent implements OnInit {
         this.markers.push(marker);
 
     } */
-
 }

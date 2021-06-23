@@ -10,13 +10,7 @@ import { RutasPage } from './rutas.page';
 import { GoogleMapsComponent } from 'src/app/googleMap/google-maps/google-maps.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RutasPageRoutingModule,
-    
-  ],
-  declarations: [RutasPage,GoogleMapsComponent]
+  imports: [CommonModule, FormsModule, IonicModule, RutasPageRoutingModule],
+  declarations: [RutasPage, GoogleMapsComponent],
 })
 export class RutasPageModule {}

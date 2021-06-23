@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1161834233",
+    "firebase_url": "https://urban-recolector-default-rtdb.firebaseio.com",
+    "project_id": "urban-recolector",
+    "storage_bucket": "urban-recolector.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1161834233:android:e9229fc8562660ff88bc28",
+        "android_client_info": {
+          "package_name": "com.aqsystems.recolector_usuario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1161834233-mg5a0kplqnag2odcjiajo65dk0qdnp28.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aqsystems.recolector_usuario",
+            "certificate_hash": "777a9f53d0a08c729a9562bc2d2add866e1f6675"
+          }
+        },
+        {
+          "client_id": "1161834233-bnhgpj7b7hfjsj3qivtekjaiv9iapm9u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlVmfoNFYdNBTZSYleQFeos8IKMFJFevk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1161834233-bnhgpj7b7hfjsj3qivtekjaiv9iapm9u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

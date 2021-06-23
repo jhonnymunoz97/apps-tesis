@@ -1,86 +1,82 @@
-div{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
+div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
 }
 
-.border{
-    border-bottom: 1px solid blue;
+.border {
+  border-bottom: 1px solid blue;
 }
 
-.no-border{
-    border-bottom: none;
+.no-border {
+  border-bottom: none;
 }
 
-ion-icon{
-    width: 100%;
-    height: 100%;
+ion-icon {
+  width: 100%;
+  height: 100%;
 }
 
-ion-label{
-    font-size: 12px;
+ion-label {
+  font-size: 12px;
 }
 
-ion-content{
-    width: 100%;
+ion-content {
+  width: 100%;
 }
 
-
-.container-horario{
-    width: 100%;
-    display: flex;
+.container-horario {
+  width: 100%;
+  display: flex;
 }
 
-
-.container-colunm-first{
-    width: 30%;   
-    display: flex;
-    font-weight: bold;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.container-colunm-first {
+  width: 30%;
+  display: flex;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.title-day{
-    font-size: 14px;
-    font-weight: bold;
+.title-day {
+  font-size: 14px;
+  font-weight: bold;
 }
 
-.detail-day{
-    font-size: 12px;
-    background: rgb(191, 191, 197);
+.detail-day {
+  font-size: 12px;
+  background: rgb(191, 191, 197);
 }
 
-.fondo1{
-    background: rgb(3, 224, 3);
+.fondo1 {
+  background: rgb(3, 224, 3);
 }
-.fondo2{
-    background: rgb(248, 89, 89)
-}
-
-.fondo3{
-    background: yellow
+.fondo2 {
+  background: rgb(248, 89, 89);
 }
 
-
-.vehicle-details{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+.fondo3 {
+  background: yellow;
+  color: black;
 }
 
-
-.container-colunm-last ion-col{
-    width: 120px;
-    text-align: center;
+.vehicle-details {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
+.container-colunm-last ion-col {
+  width: 120px;
+  text-align: center;
+}
 
-.container-colunm-last{
-    width: 70%;
-    text-align: center;
-    font-weight: bold;
+.container-colunm-last {
+  width: 70%;
+  text-align: center;
+  font-weight: bold;
 }

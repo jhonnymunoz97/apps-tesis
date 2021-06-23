@@ -1,4 +1,4 @@
-package com.aqsystems.urban.recolector;
+package com.aqsystems.recolector_usuario;
 
 import com.getcapacitor.BridgeActivity;
 
